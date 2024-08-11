@@ -14,7 +14,7 @@ Be-phonetizer гэта праграма для фанэтызацыі папак
 
 # Скрыпты
 
-`phonetize.bat` - сканвэртаваць файлы з `./srt/` у .`./ph-srt/`.
+`phonetize.bat` - сканвэртаваць файлы з `srt/` у `ph-srt/`.
 
 `phonetize/update.bat` - усталяваць/абнавіць залежнасьці.
 
