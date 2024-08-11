@@ -1,0 +1,1 @@
+node .\phonetize\main.mjs .\srt .\ph-srt

@@ -1,0 +1,7 @@
+{
+  "name": "phonetize",
+  "type": "module",
+  "dependencies": {
+    "taraskevizer": "^9.0.2"
+  }
+}
