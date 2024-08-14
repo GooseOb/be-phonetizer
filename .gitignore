@@ -2,3 +2,4 @@ errors.log
 srt/
 ph-srt/
 **/node_modules/
+phonetize/package-lock.json
