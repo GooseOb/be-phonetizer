@@ -53,7 +53,7 @@ for (const relFilePath of await readdir(sourceDir, { recursive: true })) {
   }
 
   readFile(sourcePath, "utf8")
-    // .then(addStress)
+    .then(addStress)
     .then((content) =>
       writeFile(
         targetPath,
