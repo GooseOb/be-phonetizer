@@ -7,7 +7,12 @@ import {
   writeFile,
   appendFile,
 } from "fs/promises";
-import { tarask, pipelines, TaraskConfig } from "taraskevizer";
+import {
+  tarask,
+  pipelines,
+  TaraskConfig,
+  lib as taraskLib,
+} from "taraskevizer";
 import * as path from "path";
 
 const sourceDir = path.resolve(process.argv[2]);
@@ -18,6 +23,14 @@ const cfg = new TaraskConfig({
   j: "always",
   doEscapeCapitalized: false,
 });
+
+const additionalChanges = JSON.parse(
+  await readFile("./additional-changes.json", "utf8"),
+);
+
+for (const item of additionalChanges) {
+  item[0] = new RegExp(item[0], "g");
+}
 
 if (!(await stat(targetDir).catch(() => false))) await mkdir(targetDir);
 
@@ -40,9 +53,15 @@ for (const relFilePath of await readdir(sourceDir, { recursive: true })) {
   }
 
   readFile(sourcePath, "utf8")
-    .then(addStress)
+    // .then(addStress)
     .then((content) =>
-      writeFile(targetPath, tarask(content, pipelines.phonetic, cfg)),
+      writeFile(
+        targetPath,
+        taraskLib.replaceWithDict(
+          tarask(content, pipelines.phonetic, cfg),
+          additionalChanges,
+        ),
+      ),
     )
     .then(() => {
       process.stdout.write(`[done] ${targetPath}\n`);
