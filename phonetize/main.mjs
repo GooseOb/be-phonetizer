@@ -24,11 +24,11 @@ const cfg = new TaraskConfig({
   doEscapeCapitalized: false,
 });
 
-const additionalChanges = JSON.parse(
-  await readFile("./additional-changes.json", "utf8"),
+const additionalChanges = taraskLib.callableDict(
+  JSON.parse(await readFile("./additional-changes.json", "utf8")),
 );
 
-for (const item of additionalChanges) {
+for (const item of additionalChanges.value) {
   item[0] = new RegExp(item[0], "g");
 }
 
@@ -57,10 +57,7 @@ for (const relFilePath of await readdir(sourceDir, { recursive: true })) {
     .then((content) =>
       writeFile(
         targetPath,
-        taraskLib.replaceWithDict(
-          tarask(content, pipelines.phonetic, cfg),
-          additionalChanges,
-        ),
+        additionalChanges(tarask(content, pipelines.phonetic, cfg)),
       ),
     )
     .then(() => {

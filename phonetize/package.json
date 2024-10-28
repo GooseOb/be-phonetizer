@@ -2,6 +2,6 @@
   "name": "phonetize",
   "type": "module",
   "dependencies": {
-    "taraskevizer": "^9.0.2"
+    "taraskevizer": "^9.0.3"
   }
 }
