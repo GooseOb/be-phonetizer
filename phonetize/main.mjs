@@ -7,12 +7,7 @@ import {
   writeFile,
   appendFile,
 } from "fs/promises";
-import {
-  tarask,
-  pipelines,
-  TaraskConfig,
-  lib as taraskLib,
-} from "taraskevizer";
+import { pipelines, TaraskConfig, lib as taraskLib } from "taraskevizer";
 import * as path from "path";
 
 const sourceDir = path.resolve(process.argv[2]);
@@ -57,7 +52,7 @@ for (const relFilePath of await readdir(sourceDir, { recursive: true })) {
     .then((content) =>
       writeFile(
         targetPath,
-        additionalChanges(tarask(content, pipelines.phonetic, cfg)),
+        additionalChanges(pipelines.phonetic(content, cfg)),
       ),
     )
     .then(() => {
