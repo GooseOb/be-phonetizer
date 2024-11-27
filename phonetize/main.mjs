@@ -38,6 +38,15 @@ const addStress = (input) =>
     body: input,
   }).then((res) => res.text());
 
+let isFirstError = true;
+const addToErrFile = (msg) => {
+  if (isFirstError) {
+    isFirstError = false;
+    msg = Date() + "\n" + msg;
+  }
+  return appendFile(errLogFile, msg);
+};
+
 for (const relFilePath of await readdir(sourceDir, { recursive: true })) {
   if (relFilePath.endsWith("desktop.ini")) continue;
   const sourcePath = path.join(sourceDir, relFilePath);
@@ -60,6 +69,6 @@ for (const relFilePath of await readdir(sourceDir, { recursive: true })) {
     })
     .catch((err) => {
       process.stderr.write(`[error] ${sourcePath}\n`);
-      return appendFile(errLogFile, `[${sourcePath}] ${err.message}\n`);
+      addToErrFile(`[${sourcePath}] ${err.message}\n`);
     });
 }
